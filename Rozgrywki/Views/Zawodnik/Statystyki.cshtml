@@ -1,0 +1,42 @@
+﻿@model Rozgrywki.Models.StatystykiZawodnika
+
+@{
+    ViewBag.Title = "Statystyki";
+}
+
+<h2>Statystyki</h2>
+
+<div>
+    <h4>StatystykiZawodnika</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IloscPunktow)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IloscPunktow)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IloscFauli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IloscFauli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IloscGier)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IloscGier)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "EditStatystyki", new { StatystykiZawodnikaID = Model.StatystykiZawodnikaID }) |
+    @Html.ActionLink("Powrót", "Index")
+</p>

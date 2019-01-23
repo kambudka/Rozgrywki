@@ -1,0 +1,50 @@
+﻿@model Rozgrywki.Models.Druzyna
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Druzyna</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StatystykiDruzynyID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatystykiDruzynyID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypDruzynyID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypDruzynyID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SkladID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SkladID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwa)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { DruzynaID = Model.DruzynaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

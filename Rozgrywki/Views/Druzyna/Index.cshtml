@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Rozgrywki.Models.Druzyna>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Druzyny</h2>
+
+<div class="form-horizontal">
+
+    <div class="form-group">
+            @Html.ActionLink("Nowa Druzyna", "Create")
+            @Html.ActionLink("Nowy Typ", "CreateTyp")
+    </div>
+
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TypDruzynyID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SkladID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nazwa)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypDruzynyID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SkladID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nazwa)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { DruzynaID = item.DruzynaID }) |
+            @Html.ActionLink("Statystyki", "Statystyki", new { StatystykiDruzynyID = item.StatystykiDruzynyID }) |
+            @Html.ActionLink("Sklad", "DetailsSklad", new { SkladID = item.SkladID }) |
+            @Html.ActionLink("Delete", "Delete", new { DruzynaID = item.DruzynaID })
+        </td>
+    </tr>
+}
+
+</table>

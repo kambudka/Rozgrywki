@@ -1,0 +1,71 @@
+﻿@using Rozgrywki.Models
+@model IEnumerable<Rozgrywki.Models.Mecz>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Druzyna1ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Druzyna2ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatystykiMeczuID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypMeczuID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataMeczu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WynikDruzyny1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WynikDruzyny2)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Druzyna1ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Druzyna2ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatystykiMeczuID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypMeczuID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataMeczu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WynikDruzyny1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WynikDruzyny2)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MeczID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MeczID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MeczID })
+            </td>
+        </tr>
+    }
+
+</table>
