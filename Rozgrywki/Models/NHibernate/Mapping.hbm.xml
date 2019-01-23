@@ -81,7 +81,7 @@
     <cache usage="read-write"/>
     
     <id name="StatystykiMeczuID" column="StatystykiMeczuID" type="int">
-      <generator class="native" />
+      <generator class="assigned" />
     </id>
 
     <property name="IloscFauli" />
@@ -93,7 +93,7 @@
     <cache usage="read-write"/>
 
     <id name="StatystykiTypuID" column="StatystykiTypuID" type="int">
-      <generator class="native" />
+      <generator class="assigned" />
     </id>
 
     <property name="IloscMeczy" />

@@ -13,12 +13,13 @@ namespace Rozgrywki.Controllers
     public class MeczeController : Controller
     {
         // GET: Mecze
+        List<Mecz> mecze = new List<Mecz>();
         public ActionResult Index()
         {
             using (NHibernate.ISession session = NHIbernateSession.OpenSession())
             {
 
-                var mecze = session.Query<Mecz>().ToList();
+                mecze = session.Query<Mecz>().ToList();
 
                 return View(mecze);
 
@@ -41,6 +42,7 @@ namespace Rozgrywki.Controllers
         [HttpPost]
         public ActionResult Create(Mecz mecz)
         {
+
             try
             {
                 using (NHibernate.ISession session = NHIbernateSession.OpenSession())
@@ -49,57 +51,182 @@ namespace Rozgrywki.Controllers
                     {
                         session.Save(mecz);
                         transaction.Commit();
+                        mecze = session.Query<Mecz>().ToList();
                     }
                 }
-                return RedirectToAction("Index");
             }
             catch (Exception exception)
             {
 
                 return View();
             }
-            
-        }
 
-        // GET: Mecze/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+            Mecz nowymecz = mecze.Find(x => x.DataMeczu == mecz.DataMeczu);
+            StatystykiMeczu nowestatystyki = new StatystykiMeczu();
+            nowestatystyki.StatystykiMeczuID = nowymecz.MeczID;
+            nowestatystyki.IloscRoznych = 0;
+            nowestatystyki.IloscKarnych = 0;
+            nowestatystyki.IloscFauli = 0;
 
-        // POST: Mecze/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
             try
             {
-                // TODO: Add update logic here
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        session.Save(nowestatystyki);
+                        transaction.Commit();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
 
+                return View();
+            }
+
+
+            try
+            {
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        nowymecz.StatystykiMeczuID = nowymecz.MeczID;
+                        session.Update(nowymecz);
+                        transaction.Commit();
+                    }
+                }
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception exception)
             {
                 return View();
             }
         }
 
-        // GET: Mecze/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Edit(int MeczID)
         {
-            return View();
-        }
+            using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+            {
 
-        // POST: Mecze/Delete/5
+                var mecz = session.Get<Mecz>(MeczID);
+
+                return View(mecz);
+
+            }
+        }
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Edit(int MeczID, Mecz mecz)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        session.Update(mecz);
+                        transaction.Commit();
+                    }
+                }
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception exception)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Statystyki(int StatystykiMeczuID)
+        {
+
+            using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+            {
+                var statystyki = session.Get<StatystykiMeczu>(StatystykiMeczuID);
+                return View(statystyki);
+            }
+        }
+
+        public ActionResult EditStatystyki(int StatystykiMeczuID)
+        {
+            using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+            {
+
+                var statystyki = session.Get<StatystykiMeczu>(StatystykiMeczuID);
+
+                return View(statystyki);
+
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditStatystyki(int StatystykiMEczuID, StatystykiMeczu statystyki)
+        {
+            try
+            {
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        session.Update(statystyki);
+                        transaction.Commit();
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception exception)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Delete(int MeczID)
+        {
+            using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+            {
+
+                var mecz = session.Get<Mecz>(MeczID);
+
+                return View(mecz);
+
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int MeczID, Mecz mecz)
+        {
+            int StatystykiMeczuID = MeczID;
+            try
+            {
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        
+                        session.Delete(mecz);
+                        transaction.Commit();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                return View();
+            }
+
+            try
+            {
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        var statystyki = session.Get<StatystykiMeczu>(StatystykiMeczuID);
+                        session.Delete(statystyki);
+                        transaction.Commit();
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception exception)
             {
                 return View();
             }

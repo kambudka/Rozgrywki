@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Rozgrywki.Models.SkladZawodnik>
+
+@{
+    ViewBag.Title = "EditSklad";
+}
+
+<h2>EditSklad</h2>
+
+
+@using (Html.BeginForm("Index", "Books", FormMethod.Get))
+{
+    <p>
+        <b> Search Option: </b>: @Html.DropDownList("zawodnikID", "All")
+        <input type="submit" name="submit" value='Dodaj' class="btn-primary" />
+    </p>
+}
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SkladID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZawodnikID)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SkladID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ZawodnikID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+
+    </table>

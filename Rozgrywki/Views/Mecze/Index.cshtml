@@ -61,9 +61,9 @@
                 @Html.DisplayFor(modelItem => item.WynikDruzyny2)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.MeczID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.MeczID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MeczID })
+                @Html.ActionLink("Edit", "Edit", new { MeczID = item.MeczID }) |
+                @Html.ActionLink("Statystyki", "Statystyki", new { StatystykiMeczuID = item.StatystykiMeczuID }) |
+                @Html.ActionLink("Delete", "Delete", new { MeczID = item.MeczID })
             </td>
         </tr>
     }

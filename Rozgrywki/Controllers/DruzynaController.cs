@@ -14,12 +14,13 @@ namespace Rozgrywki.Controllers
     {
         // GET: Druzyna
         List<Druzyna> druzyny = new List<Druzyna>();
+        List<TypMeczu> typymeczow = new List<TypMeczu>();
         public ActionResult Index()
         {
             using (NHibernate.ISession session = NHIbernateSession.OpenSession())
             {
                 druzyny = session.Query<Druzyna>().ToList();
-
+                typymeczow = session.Query<TypMeczu>().ToList();
                 return View(druzyny);
             }
         }
@@ -45,13 +46,11 @@ namespace Rozgrywki.Controllers
             }
         }
 
-        // GET: Druzyna/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Druzyna/Create
         [HttpPost]
         public ActionResult Create(Druzyna druzyna)
         {
@@ -69,8 +68,6 @@ namespace Rozgrywki.Controllers
                     using (ITransaction transaction = session.BeginTransaction())
                     {
                         session.Save(druzyna);
-
-
 
                         transaction.Commit();
                         druzyny = session.Query<Druzyna>().ToList();
@@ -132,15 +129,13 @@ namespace Rozgrywki.Controllers
 
         }
 
-        // GET: Druzyna/Create
         public ActionResult CreateTyp()
         {
             return View();
         }
 
-        // POST: Druzyna/Create
         [HttpPost]
-        public ActionResult CreateTyp(TypDruzyny typdruzyny)
+        public ActionResult CreateTyp(TypMeczu typMeczu)
         {
             try
             {
@@ -148,7 +143,46 @@ namespace Rozgrywki.Controllers
                 {
                     using (ITransaction transaction = session.BeginTransaction())
                     {
-                        session.Save(typdruzyny);
+                        session.Save(typMeczu);
+                        transaction.Commit();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+
+                return View();
+            }
+            TypMeczu nowytyp = typymeczow.Find(x => x.NazwaTypu == typMeczu.NazwaTypu);
+            StatystykiTypu nowestatystyki = new StatystykiTypu();
+            nowestatystyki.StatystykiTypuID = nowytyp.TypMeczuID;
+            nowestatystyki.IloscMeczy = 0;
+            nowestatystyki.IloscPunktow = 0;
+            try
+            {
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        session.Save(typMeczu);
+                        transaction.Commit();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+
+                return View();
+            }
+
+            try
+            {
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        nowytyp.StatystykiTypuID = nowytyp.TypMeczuID;
+                        session.Update(nowytyp);
                         transaction.Commit();
                     }
                 }
@@ -156,7 +190,84 @@ namespace Rozgrywki.Controllers
             }
             catch (Exception exception)
             {
+                return View();
+            }
+        }
 
+        public ActionResult Sklad()
+        {
+            return View();
+        }
+
+        public ActionResult EditSklad(int SkladID)
+        {
+            using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+            {
+
+                var druzyna = session.Get<SkladZawodnik>(SkladID);
+
+                return View(druzyna);
+
+            }
+        }
+
+        // POST: Druzyna/Create
+        [HttpPost]
+        public ActionResult EditSklad(int SkladID, int bramkarz,int obronca1,int obronca2,int obronca3, int obronca4,int pomocnik1,int pomocnik2,int pomocnik3,int pomocnik4,int napastnik1,int napastnik2)
+        {
+            try
+            {
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        session.Save(typMeczu);
+                        transaction.Commit();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+
+                return View();
+            }
+            TypMeczu nowytyp = typymeczow.Find(x => x.NazwaTypu == typMeczu.NazwaTypu);
+            StatystykiTypu nowestatystyki = new StatystykiTypu();
+            nowestatystyki.StatystykiTypuID = nowytyp.TypMeczuID;
+            nowestatystyki.IloscMeczy = 0;
+            nowestatystyki.IloscPunktow = 0;
+            try
+            {
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        session.Save(typMeczu);
+                        transaction.Commit();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+
+                return View();
+            }
+
+            try
+            {
+                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
+                {
+                    using (ITransaction transaction = session.BeginTransaction())
+                    {
+                        nowytyp.StatystykiTypuID = nowytyp.TypMeczuID;
+                        session.Update(nowytyp);
+                        transaction.Commit();
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception exception)
+            {
                 return View();
             }
         }
@@ -242,39 +353,7 @@ namespace Rozgrywki.Controllers
             }
         }
 
-        // GET: Druzyna/Edit/5
-        public ActionResult Sklad(int id)
-        {
-            return View();
-        }
-
-        public ActionResult CreateSklad()
-        {
-            return View();
-        }
-
-        // POST: Druzyna/Create
-        [HttpPost]
-        public ActionResult CreateSklad(Sklad sklad)
-        {
-            try
-            {
-                using (NHibernate.ISession session = NHIbernateSession.OpenSession())
-                {
-                    using (ITransaction transaction = session.BeginTransaction())
-                    {
-                        session.Save(sklad);
-                        transaction.Commit();
-                    }
-                }
-                return RedirectToAction("Index");
-            }
-            catch (Exception exception)
-            {
-
-                return View();
-            }
-        }
+      
 
 
         // GET: Druzyna/Delete/5

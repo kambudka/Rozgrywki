@@ -319,6 +319,11 @@
     <Content Include="Views\Zawodnik\EditStatystyki.cshtml" />
     <Content Include="Views\Zawodnik\Delete.cshtml" />
     <Content Include="Views\Druzyna\EditStatystyki.cshtml" />
+    <Content Include="Views\Mecze\Edit.cshtml" />
+    <Content Include="Views\Mecze\Statystyki.cshtml" />
+    <Content Include="Views\Mecze\EditStatystyki.cshtml" />
+    <Content Include="Views\Mecze\Delete.cshtml" />
+    <Content Include="Views\Druzyna\EditSklad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,80 @@
+﻿@model Rozgrywki.Models.Mecz
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Mecz</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Druzyna1ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Druzyna1ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Druzyna2ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Druzyna2ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatystykiMeczuID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatystykiMeczuID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypMeczuID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypMeczuID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataMeczu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataMeczu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WynikDruzyny1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WynikDruzyny1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WynikDruzyny2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WynikDruzyny2)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
